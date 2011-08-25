@@ -318,7 +318,7 @@ void Set::selection(int n)
     if (strcmp(id,"0") == 0) nlo = nhi = 0;
     else force->bounds(id,BIG,nlo,nhi);
 
-    int *molecule = atom->molecule;
+    int* molecule = atom->molecule;
     for (int i = 0; i < n; i++)
       if (molecule[i] >= nlo && molecule[i] <= nhi) select[i] = 1;
       else select[i] = 0;

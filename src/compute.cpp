@@ -221,13 +221,16 @@ int Compute::molecules_in_group(int &idlo, int &idhi)
   // find lo/hi molecule ID for any atom in group
   // warn if atom in group has ID = 0
 
-  int *molecule = atom->molecule;
-  int *mask = atom->mask;
-  int nlocal = atom->nlocal;
+  int* molecule = atom->molecule;
+  int* mask = atom->mask;
 
-  int lo = BIG;
+  int  nlocal = atom->nlocal; // # atoms in this proc
+
+  int lo =  BIG;
   int hi = -BIG;
+
   int flag = 0;
+
   for (i = 0; i < nlocal; i++)
     if (mask[i] & groupbit) {
       if (molecule[i] == 0) flag = 1;
@@ -248,7 +251,7 @@ int Compute::molecules_in_group(int &idlo, int &idhi)
   // molmap = vector of length nlen
   // set to 1 for IDs that appear in group across all procs, else 0
 
-  int nlen = idhi-idlo+1;
+  int nlen = idhi-idlo+1; //vfda; total # of molecules
   memory->create(molmap,nlen,"compute:molmap");
   for (i = 0; i < nlen; i++) molmap[i] = 0;
 
@@ -288,5 +291,7 @@ int Compute::molecules_in_group(int &idlo, int &idhi)
     memory->destroy(molmap);
     molmap = NULL;
   }
+
   return nmolecules;
+
 }

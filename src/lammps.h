@@ -19,10 +19,11 @@
 namespace LAMMPS_NS {
 
 class LAMMPS {
+
  public:
                                  // ptrs to fundamental LAMMPS classes
-  class Memory *memory;          // memory allocation functions
-  class Error *error;            // error handling
+  class Memory* memory;          // memory allocation functions
+  class Error*  error;            // error handling
   class Universe *universe;      // universe of processors
   class Input *input;            // input script processing
                                  // ptrs to top-level LAMMPS-specific classes
@@ -46,8 +47,11 @@ class LAMMPS {
   int suffix_enable;             // 1 if suffix enabled, 0 if disabled
   class Cuda *cuda;              // CUDA accelerator class
 
+  // constructor
   LAMMPS(int, char **, MPI_Comm);
+  // destructor
   ~LAMMPS();
+
   void create();
   void init();
   void destroy();

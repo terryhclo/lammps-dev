@@ -19,9 +19,11 @@
 namespace LAMMPS_NS {
 
 class Atom : protected Pointers {
+
  public:
-  char *atom_style;
-  class AtomVec *avec;
+
+  char* atom_style;
+  class AtomVec* avec;
 
   // atom counts
 
@@ -46,7 +48,8 @@ class Atom : protected Pointers {
   int *tag,*type,*mask,*image;
   double **x,**v,**f;
 
-  int *molecule;
+  int* molecule;
+
   double *q,**mu;
   double **omega,**angmom,**torque;
   double *radius,*rmass,*vfrac,*s0;
@@ -94,8 +97,8 @@ class Atom : protected Pointers {
 
   // per-type arrays
 
-  double *mass;
-  int *mass_setflag;
+  double* mass;
+  int*    mass_setflag;
 
   // callback ptrs for atom arrays managed by fix classes
 
@@ -112,10 +115,13 @@ class Atom : protected Pointers {
   int sortfreq;             // sort atoms every this many steps, 0 = off
   bigint nextsort;          // next timestep to sort on
 
-  // functions
-
+  // constructor
   Atom(class LAMMPS *);
+ 
+  // destructor
   ~Atom();
+    
+  // functions
 
   void settings(class Atom *);
   void create_avec(const char *, int, char **, char *suffix = NULL);

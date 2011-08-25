@@ -40,7 +40,7 @@ using namespace LAMMPS_NS;
    input is allocated at end after MPI info is setup
 ------------------------------------------------------------------------- */
 
-LAMMPS::LAMMPS(int narg, char **arg, MPI_Comm communicator)
+LAMMPS::LAMMPS(int narg, char** arg, MPI_Comm communicator)
 {
   memory = new Memory(this);
   error = new Error(this);

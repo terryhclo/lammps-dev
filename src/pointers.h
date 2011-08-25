@@ -28,51 +28,56 @@
 namespace LAMMPS_NS {
 
 class Pointers {
+
  public:
-  Pointers(LAMMPS *ptr) : 
-    lmp(ptr),
-    memory(ptr->memory),
-    error(ptr->error),
-    universe(ptr->universe),
-    input(ptr->input),
-    atom(ptr->atom),
-    update(ptr->update),
-    neighbor(ptr->neighbor),
-    comm(ptr->comm),
-    domain(ptr->domain),
-    force(ptr->force),
-    modify(ptr->modify),
-    group(ptr->group),
-    output(ptr->output),
-    timer(ptr->timer),
-    world(ptr->world),
-    infile(ptr->infile),
-    screen(ptr->screen),
-    logfile(ptr->logfile) {}
+
+  // constructor
+  Pointers(LAMMPS* ptr) : lmp(ptr),
+                          memory(ptr->memory),
+                          error(ptr->error),
+                          universe(ptr->universe),
+                          input(ptr->input),
+                          atom(ptr->atom),
+                          update(ptr->update),
+                          neighbor(ptr->neighbor),
+                          comm(ptr->comm),
+                          domain(ptr->domain),
+                          force(ptr->force),
+                          modify(ptr->modify),
+                          group(ptr->group),
+                          output(ptr->output),
+                          timer(ptr->timer),
+                          world(ptr->world),
+                          infile(ptr->infile),
+                          screen(ptr->screen),
+                          logfile(ptr->logfile) {}
+
+  // destructor
   virtual ~Pointers() {}
 
  protected:
-  LAMMPS *lmp;
-  Memory *&memory;
-  Error *&error;
-  Universe *&universe;
-  Input *&input;
 
-  Atom *&atom;
-  Update *&update;
-  Neighbor *&neighbor;
-  Comm *&comm;
-  Domain *&domain;
-  Force *&force;
-  Modify *&modify;
-  Group *&group;
-  Output *&output;
-  Timer *&timer;
+  LAMMPS*    lmp;
+  Memory*&   memory;
+  Error*&    error;
+  Universe*& universe;
+  Input*&    input;
 
-  MPI_Comm &world;
-  FILE *&infile;
-  FILE *&screen;
-  FILE *&logfile;
+  Atom*&     atom;
+  Update*&   update;
+  Neighbor*& neighbor;
+  Comm*&     comm;
+  Domain*&   domain;
+  Force*&    force;
+  Modify*&   modify;
+  Group*&    group;
+  Output*&   output;
+  Timer*&    timer;
+
+  MPI_Comm& world;
+  FILE*&    infile;
+  FILE*&    screen;
+  FILE*&    logfile;
 };
 
 }

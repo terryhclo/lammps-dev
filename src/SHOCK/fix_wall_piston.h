@@ -10,27 +10,34 @@
 
    See the README file in the top-level LAMMPS directory.
 ------------------------------------------------------------------------- */
+#ifdef FIX_CLASS
 
-#ifdef PAIR_CLASS
-
-PairStyle(lj/cut/opt,PairLJCutOpt)
+FixStyle(wall/piston,FixWallPiston)
 
 #else
 
-#ifndef LMP_PAIR_LJ_CUT_OPT_H
-#define LMP_PAIR_LJ_CUT_OPT_H
+#ifndef LMP_FIX_WALL_PISTON_H
+#define LMP_FIX_WALL_PISTON_H
 
-#include "pair_lj_cut.h"
+#include "fix.h"
 
 namespace LAMMPS_NS {
 
-class PairLJCutOpt : public PairLJCut {
+class FixWallPiston : public Fix {
  public:
-  PairLJCutOpt(class LAMMPS *);
-  void compute(int, int);
+  FixWallPiston(class LAMMPS *, int, char **);
+  int setmask();
+  void post_integrate();
+  void initial_integrate(int);
 
  private:
-  template < int EVFLAG, int EFLAG, int NEWTON_PAIR > void eval();
+  int xloflag,xhiflag,yloflag,yhiflag,zloflag,zhiflag;
+  int scaleflag, roughflag, rampflag, rampNL1flag, rampNL2flag, rampNL3flag, rampNL4flag, rampNL5flag;
+  double roughdist,roughoff,x0,y0,z0,vx,vy,vz,maxvx,maxvy,maxvz,paccelx,paccely,paccelz, angfreq;
+  int tempflag, tseed;
+  double t_target, t_period, t_extent;
+  class RanMars *randomt;
+  double *gfactor1,*gfactor2;
 };
 
 }

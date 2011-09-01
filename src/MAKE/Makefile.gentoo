@@ -53,7 +53,9 @@ FFT_INC =       -DFFT_FFTW3
 FFT_PATH =      
 FFT_LIB =	-lfftw3
 
-# JPEG library, only needed if -DLAMMPS_JPEG listed with LMP_INC
+# JPEG library, OPTIONAL
+# see discussion in doc/Section_start.html#2_2 (step 7)
+# only needed if -DLAMMPS_JPEG listed with LMP_INC
 # INC = path for jpeglib.h
 # PATH = path for JPEG library
 # LIB = name of JPEG library
@@ -61,36 +63,12 @@ FFT_LIB =	-lfftw3
 JPG_INC  =
 JPG_PATH = 
 JPG_LIB  = -ljpeg
-
-# additional system libraries needed by LAMMPS package libraries
-# these settings are IGNORED if the corresponding LAMMPS package
-#   (e.g. gpu, meam) is NOT included in the LAMMPS build
-# SYSINC = settings to compile with
-# SYSLIB = libraries to link with
-# SYSPATH = paths to libraries
-
-gpu_SYSINC =
-meam_SYSINC =
-reax_SYSINC =
-user-atc_SYSINC =
-user-awpmd_SYSINC =
-
-gpu_SYSLIB =       -lcudart -lcuda
-meam_SYSLIB =      -lifcore -lsvml -lompstub -limf
-reax_SYSLIB =      -lifcore -lsvml -lompstub -limf
-user-atc_SYSLIB =  -lblas -llapack
-user-awpmd_SYSLIB =  -lblas -llapack
-
-gpu_SYSPATH =      -L/usr/local/cuda/lib64
-meam_SYSPATH =     -L/opt/intel/fce/10.0.023/lib
-reax_SYSPATH =     -L/opt/intel/fce/10.0.023/lib
-user-atc_SYSPATH = 	
-user-awpmd_SYSPATH = 	
-
+ 
 # ---------------------------------------------------------------------
 # build rules and dependencies
 # no need to edit this section
 
+include	Makefile.package.settings
 include	Makefile.package
 
 EXTRA_INC = $(LMP_INC) $(PKG_INC) $(MPI_INC) $(FFT_INC) $(JPG_INC) $(PKG_SYSINC)
@@ -120,3 +98,4 @@ lib:	$(OBJ)
 
 DEPENDS = $(OBJ:.o=.d)
 include $(DEPENDS)
+

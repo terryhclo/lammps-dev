@@ -13,41 +13,42 @@
 
 #ifdef PAIR_CLASS
 
-PairStyle(lubricate,PairLubricate)
+PairStyle(brownian,PairBrownian)
 
 #else
 
-#ifndef LMP_PAIR_LUBRICATE_H
-#define LMP_PAIR_LUBRICATE_H
+#ifndef LMP_PAIR_BROWNIAN_H
+#define LMP_PAIR_BROWNIAN_H
 
 #include "pair.h"
 
 namespace LAMMPS_NS {
 
-class PairLubricate : public Pair {
+class PairBrownian : public Pair {
  public:
-  PairLubricate(class LAMMPS *);
-  ~PairLubricate();
-  void compute(int, int);
+  PairBrownian(class LAMMPS *);
+  virtual ~PairBrownian();
+  virtual void compute(int, int); 
   void settings(int, char **);
   void coeff(int, char **);
-  double init_one(int, int);
-  void init_style();
+  virtual double init_one(int, int);
+  virtual void init_style();
   void write_restart(FILE *);
   void read_restart(FILE *);
   void write_restart_settings(FILE *);
-  void read_restart_settings(FILE *);
-  void *extract(char *, int &);
+  void read_restart_settings(FILE *); 
 
  protected:
   double cut_inner_global,cut_global;
   double t_target,mu;
-  int flag1,flag2,flag3,flag4;
+  int flaglog,flagfld;
   int seed;
   double **cut_inner,**cut;
+  double R0,RT0;
 
   class RanMars *random;
 
+  void set_3_orthogonal_vectors(double*,double*,double*);
   void allocate();
 };
 

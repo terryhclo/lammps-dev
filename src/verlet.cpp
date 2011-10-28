@@ -49,7 +49,7 @@ void Verlet::init()
   // warn if no fixes
 
   if (modify->nfix == 0 && comm->me == 0)
-    error->warning("No fixes defined, atoms won't move");
+    error->warning(FLERR,"No fixes defined, atoms won't move");
 
   // virial_style:
   // 1 if computed explicitly by pair->compute via sum over pair interactions
@@ -307,6 +307,8 @@ void Verlet::cleanup()
 void Verlet::force_clear()
 {
   int i;
+
+  if (external_force_clear) return;
 
   // clear force on all particles
   // if either newton flag is set, also include ghosts

@@ -72,6 +72,8 @@ in place of a dihedral style, either in a input script dihedral_coeff
 command or in the data file, if you desire to turn off interactions
 for specific dihedral types.
 
+:line
+
 [Restrictions:]
 
 This dihedral style can only be used if LAMMPS was built with the

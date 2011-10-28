@@ -40,6 +40,7 @@ ASPHERE, aspherical particles, -, "howto"_Section_howto.html#howto_14, ellipse, 
 CLASS2, class 2 force fields, -, "pair_style lj/class2"_pair_class2.html, -, -
 COLLOID, colloidal particles, -, "atom_style colloid"_atom_style.html, colloid, -
 DIPOLE, point dipole particles, -, "pair_style dipole/cut"_pair_dipole.html, dipole, -
+FLD, Fast Lubrication Dynamics, Kumar & Bybee & Higdon (1), "pair_style lubricateU"_pair_lubricateU.html, -, -
 GPU, GPU-enabled potentials, Mike Brown (ORNL), "accelerate"_Section_accelerate.html#acc_3, gpu, lib/gpu
 GRANULAR, granular systems, -, "howto"_Section_howto.html#howto_6, pour, -
 KSPACE, long-range Coulombic solvers, -, "kspace_style"_kspace_style.html, peptide, -
@@ -47,7 +48,7 @@ MANYBODY, many-body potentials, -, "pair_style tersoff"_pair_tersoff.html, shear
 MEAM, modified EAM potential, Greg Wagner (Sandia), "pair_style meam"_pair_meam.html, meam, lib/meam
 MC, Monte Carlo options, -, "fix gcmc"_fix_gcmc.html, -, -
 MOLECULE, molecular system force fields, -, "howto"_Section_howto.html#howto_3, peptide, -
-OPT, optimized pair potentials, Fischer & Richie & Natoli (1), "howto"_Section_accelerate.html#acc_1, -, -
+OPT, optimized pair potentials, Fischer & Richie & Natoli (2), "howto"_Section_accelerate.html#acc_1, -, -
 PERI, Peridynamics models, Mike Parks (Sandia), "pair_style peri"_pair_peri.html, peri, -
 POEMS, coupled rigid body motion, Rudra Mukherjee (JPL), "fix poems"_fix_poems.html, rigid, lib/poems
 REAX, ReaxFF potential, Aidan Thompson (Sandia), "pair_style reax"_pair_reax.html, reax,  lib/reax
@@ -60,7 +61,10 @@ XTC, dumps in XTC format, -, "dump"_dump.html, -, -
 The "Authors" column lists a name(s) if a specific person is
 responible for creating and maintaining the package.
 
-(1) The OPT package was created by James Fischer (High Performance
+(1) The FLD package was created by Amit Kumar and Michael Bybee from
+Jonathan Higdon's group at UIUC.
+
+(2) The OPT package was created by James Fischer (High Performance
 Technologies), David Richie, and Vincent Natoli (Stone Ridge
 Technolgy).
 
@@ -89,6 +93,7 @@ USER-CG-CMM, coarse-graining model, Axel Kohlmeyer (Temple U), "pair_style cg/cm
 USER-CUDA, NVIDIA GPU styles, Christian Trott (U Tech Ilmenau), "accelerate"_Section_accelerate.html#acc_4, USER/cuda, -, lib/cuda
 USER-EFF, electron force field, Andres Jaramillo-Botero (Caltech), "pair_style eff/cut"_pair_eff.html, USER/eff, "eff"_eff, -
 USER-EWALDN, Ewald for 1/R^n, Pieter in' t Veld (BASF), "kspace_style"_kspace_style.html, -, -, -
+USER-OMP, OpenMP threaded styles, Axel Kohlmeyer (Temple U), "accelerate"_Section_accelerate.html#acc_2, -, -, -
 USER-REAXC, C version of ReaxFF, Metin Aktulga (LBNL), "pair_style reaxc"_pair_reax_c.html, reax, -, -
 USER-SPH, smoothed particle hydrodynamics, Georg Ganzenmuller (EMI), "SPH_LAMMPS_userguide.pdf"_USER/sph/SPH_LAMMPS_userguide.pdf, USER/sph, "sph"_sph, -
 :tb(ea=c)
@@ -315,6 +320,21 @@ directly if you have questions.
 
 :line
 
+USER-OMP package :h4
+
+This package provides OpenMP multi-threading support and
+other optimizations of various LAMMPS pair styles, dihedral
+styles, and fix styles.
+ 
+See this section of the manual to get started:
+
+"Section_accelerate"_Section_accelerate.html#acc_2
+
+The person who created this package is Axel Kohlmeyer at Temple U
+(akohlmey at gmail.com).  Contact him directly if you have questions.
+
+:line
+
 USER-REAXC package :h4
 
 This package contains a implementation for LAMMPS of the ReaxFF force
@@ -338,7 +358,7 @@ this paper:
 
 Parallel and Scalable Reactive Molecular Dynamics: Numerical Methods
 and Algorithmic Techniques, H. M. Aktulga, J. C. Fogarty,
-S. A. Pandit, A. Y. Grama, Parallel Computing, to appear (2011).
+S. A. Pandit, A. Y. Grama, Parallel Computing, in press (2011).
 
 See the doc page for the pair_style reax/c command for details
 of how to use it in LAMMPS.

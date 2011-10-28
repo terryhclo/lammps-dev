@@ -27,13 +27,11 @@
 
 using namespace LAMMPS_NS;
 
-#define MIN(a,b) ((a) < (b) ? (a) : (b))
-#define MAX(a,b) ((a) > (b) ? (a) : (b))
-
 /* ---------------------------------------------------------------------- */
 
-PairSPHRhoSum::PairSPHRhoSum(LAMMPS *lmp) :
-  Pair(lmp) {
+PairSPHRhoSum::PairSPHRhoSum(LAMMPS *lmp) : Pair(lmp)
+{
+  restartinfo = 0;
 
   // set comm size needed by this Pair
 
@@ -229,7 +227,7 @@ void PairSPHRhoSum::allocate() {
 
 void PairSPHRhoSum::settings(int narg, char **arg) {
   if (narg != 1)
-    error->all(
+    error->all(FLERR,
         "Illegal number of setting arguments for pair_style sph/rhosum");
   nstep = force->inumeric(arg[0]);
 }
@@ -240,7 +238,7 @@ void PairSPHRhoSum::settings(int narg, char **arg) {
 
 void PairSPHRhoSum::coeff(int narg, char **arg) {
   if (narg != 3)
-    error->all("Incorrect number of args for sph/rhosum coefficients");
+    error->all(FLERR,"Incorrect number of args for sph/rhosum coefficients");
   if (!allocated)
     allocate();
 
@@ -261,7 +259,7 @@ void PairSPHRhoSum::coeff(int narg, char **arg) {
   }
 
   if (count == 0)
-    error->all("Incorrect args for pair coefficients");
+    error->all(FLERR,"Incorrect args for pair coefficients");
 }
 
 /* ----------------------------------------------------------------------
@@ -270,7 +268,7 @@ void PairSPHRhoSum::coeff(int narg, char **arg) {
 
 double PairSPHRhoSum::init_one(int i, int j) {
   if (setflag[i][j] == 0) {
-    error->all("All pair sph/rhosum coeffs are not set");
+    error->all(FLERR,"All pair sph/rhosum coeffs are not set");
   }
 
   cut[j][i] = cut[i][j];

@@ -248,14 +248,15 @@ vendor-provided MPI which the compiler has no trouble finding.
 file (MPI_INC) and the MPI library file (MPI_PATH) are found and the
 name of the library file (MPI_LIB).
 </P>
-<P>If you are installing MPI yourself, we recommend Argonne's MPICH 1.2
-or 2.0 or OpenMPI.  MPICH can be downloaded from the <A HREF = "http://www-unix.mcs.anl.gov/mpi">Argonne MPI
-site</A>.  OpenMPI can be downloaded the
-<A HREF = "http://www.open-mpi.org">OpenMPI site</A>.  LAM MPI should also work.  If
-you are running on a big parallel platform, your system people or the
-vendor should have already installed a version of MPI, which will be
-faster than MPICH or OpenMPI or LAM, so find out how to build and link
-with it.  If you use MPICH or OpenMPI or LAM, you will have to
+<P>If you are installing MPI yourself, we recommend Argonne's MPICH2
+or OpenMPI.  MPICH can be downloaded from the <A HREF = "http://www.mcs.anl.gov/research/projects/mpich2/">Argonne MPI
+site</A>.  OpenMPI can
+be downloaded from the <A HREF = "http://www.open-mpi.org">OpenMPI site</A>.
+Other MPI packages should also work. If you are running on a big
+parallel platform, your system people or the vendor should have
+already installed a version of MPI, which is likely to be faster
+than a self-installed MPICH or OpenMPI, so find out how to build
+and link with it.  If you use MPICH or OpenMPI, you will have to
 configure and build it for your platform.  The MPI configure script
 should have compiler options to enable you to use the same compiler
 you are using for the LAMMPS build, which can avoid problems that can
@@ -977,18 +978,18 @@ partition screen files file.N.
 <PRE>-suffix style 
 </PRE>
 <P>Use variants of various styles if they exist.  The specified style can
-be <I>opt</I> or <I>gpu</I> or <I>cuda</I>.  These refer to optional packages that
+be <I>opt</I>, <I>omp</I>, <I>gpu</I>, or <I>cuda</I>.  These refer to optional packages that
 LAMMPS can be built with, as described above in <A HREF = "#start_3">Section
 2.3</A>.  The "opt" style corrsponds to the OPT package, the
-"gpu" style to the GPU package, and the "cuda" style to the USER-CUDA
-package.
+"omp" style to the USER-OMP package, the "gpu" style to the GPU 
+package, and the "cuda" style to the USER-CUDA package.
 </P>
 <P>As an example, all of the packages provide a <A HREF = "pair_lj.html">pair_style
-lj/cut</A> variant, with style names lj/cut/opt or
-lj/cut/gpu or lj/cut/cuda.  A variant styles can be specified
+lj/cut</A> variant, with style names lj/cut/opt, lj/cut/omp,
+lj/cut/gpu, or lj/cut/cuda.  A variant styles can be specified
 explicitly in your input script, e.g. pair_style lj/cut/gpu.  If the
 -suffix switch is used, you do not need to modify your input script.
-The specified suffix (opt,gpu,cuda) is automatically appended whenever
+The specified suffix (opt,omp,gpu,cuda) is automatically appended whenever
 your input script command creates a new <A HREF = "atom_style.html">atom</A>,
 <A HREF = "pair_style.html">pair</A>, <A HREF = "fix.html">fix</A>, <A HREF = "compute.html">compute</A>, or
 <A HREF = "run_style.html">run</A> style.  atom, pair, fix, compute, or integrate
@@ -1014,6 +1015,12 @@ re-defined.  See the <A HREF = "variable.html">variable</A> command for more inf
 defining index and other kinds of variables and <A HREF = "Section_commands.html#cmd_2">this
 section</A> for more info on using variables
 in input scripts.
+</P>
+<P>NOTE: Currently, the command-line parser looks for arguments that
+start with "-" to indicate new switches.  Thus you cannot specify
+multiple variable values if any of they start with a "-", e.g. a
+negative numeric value.  It is OK if the first value1 starts with a
+"-", since it is automatically skipped.
 </P>
 <HR>
 

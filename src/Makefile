@@ -13,7 +13,7 @@ OBJ = 	$(SRC:.cpp=.o)
 
 # Package variables
 
-PACKAGE = asphere class2 colloid dipole gpu granular \
+PACKAGE = asphere class2 colloid dipole fld gpu granular \
 	  kspace manybody mc meam molecule opt peri poems reax replica \
 	  shock srd xtc
 
@@ -156,6 +156,10 @@ no-user:
 	@for p in $(PACKUSER); do $(MAKE) no-$$p; done
 
 yes-%:
+	@if [ ! -e Makefile.package ]; \
+	  then cp Makefile.package.empty Makefile.package; fi
+	@if [ ! -e Makefile.package.settings ]; \
+	  then cp Makefile.package.settings.empty Makefile.package.settings; fi
 	@if [ ! -e $(YESDIR) ]; then \
 	  echo "Package $(@:yes-%=%) does not exist"; \
 	else \

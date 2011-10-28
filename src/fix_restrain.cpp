@@ -26,10 +26,12 @@
 #include "comm.h"
 #include "respa.h"
 #include "input.h"
+#include "math_const.h"
 #include "memory.h"
 #include "error.h"
 
 using namespace LAMMPS_NS;
+using namespace MathConst;
 
 enum{DIHEDRAL};
 
@@ -41,7 +43,7 @@ FixRestrain::FixRestrain(LAMMPS *lmp, int narg, char **arg) :
   Fix(lmp, narg, arg)
 {
   int iarg = 6;
-  if (narg < iarg) error->all("Illegal fix restrain command");
+  if (narg < iarg) error->all(FLERR,"Illegal fix restrain command");
 
   scalar_flag = 1;
   global_freq = 1;
@@ -56,11 +58,11 @@ FixRestrain::FixRestrain(LAMMPS *lmp, int narg, char **arg) :
   if (strcmp(arg[5], "dihedral") == 0) {
     rstyle = DIHEDRAL;
     n_atoms = 4;
-  } else error->all("Illegal fix restrain command");
+  } else error->all(FLERR,"Illegal fix restrain command");
 
   n_bonds = (narg - iarg) / (n_atoms + 1);
   if (narg != iarg + n_bonds * (n_atoms + 1))
-    error->all("Illegal fix restrain command");
+    error->all(FLERR,"Illegal fix restrain command");
 
   // allocate arrays
 
@@ -83,13 +85,12 @@ FixRestrain::FixRestrain(LAMMPS *lmp, int narg, char **arg) :
   // special treatment for dihedral restraints
 
   if (rstyle == DIHEDRAL) {
-    double PI = 4.0*atan(1.0);
     cos_shift = (double *)
       memory->smalloc(n_bonds * sizeof(double), "restrain:cos_shift");
     sin_shift = (double *)
       memory->smalloc(n_bonds * sizeof(double), "restrain:sin_shift");
     for (ibond = 0; ibond < n_bonds; ibond++) {
-      double my_arg = PI * (180.0 + target[ibond]) / 180.0;
+      double my_arg = MY_PI * (180.0 + target[ibond]) / 180.0;
       cos_shift[ibond] = cos(my_arg);
       sin_shift[ibond] = sin(my_arg);
     }
@@ -98,7 +99,7 @@ FixRestrain::FixRestrain(LAMMPS *lmp, int narg, char **arg) :
   // require atom map to lookup atom IDs
 
   if (atom->map_style == 0) 
-    error->all("Fix restrain requires an atom map, see atom_modify");
+    error->all(FLERR,"Fix restrain requires an atom map, see atom_modify");
 }
 
 /* ---------------------------------------------------------------------- */
@@ -218,7 +219,7 @@ void FixRestrain::restrain_dihedral()
 		BIGINT_FORMAT,
 		atom_id[n][0],atom_id[n][1],atom_id[n][2],atom_id[n][3],
 		comm->me,update->ntimestep);
-	error->one(str);
+	error->one(FLERR,str);
       }
     } else {
       if ((i1 == -1 || i1 >= nlocal) && (i2 == -1 || i2 >= nlocal) &&
@@ -230,7 +231,7 @@ void FixRestrain::restrain_dihedral()
 		BIGINT_FORMAT,
 		atom_id[n][0],atom_id[n][1],atom_id[n][2],atom_id[n][3],
 		comm->me,update->ntimestep);
-	error->one(str);
+	error->one(FLERR,str);
       }
     }
 
@@ -291,7 +292,7 @@ void FixRestrain::restrain_dihedral()
 	sprintf(str,"Restrain problem: %d " BIGINT_FORMAT " %d %d %d %d",
 		me,update->ntimestep,
 		atom->tag[i1],atom->tag[i2],atom->tag[i3],atom->tag[i4]);
-	error->warning(str);
+	error->warning(FLERR,str);
 	fprintf(screen,"  1st atom: %d %g %g %g\n",
 		me,x[i1][0],x[i1][1],x[i1][2]);
 	fprintf(screen,"  2nd atom: %d %g %g %g\n",

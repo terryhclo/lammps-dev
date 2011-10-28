@@ -50,6 +50,8 @@ An improper style of {none} can be specified as the 2nd argument to
 the improper_coeff command, if you desire to turn off certain improper
 types.
 
+:line
+
 [Restrictions:]
 
 This improper style can only be used if LAMMPS was built with the
